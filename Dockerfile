@@ -23,6 +23,7 @@ COPY --from=builder /usr/local/bin/microsocks /usr/local/bin
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
     && echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
       && apk add --update --no-cache \
+      nettle \
       dumb-init \
       openconnect
 
