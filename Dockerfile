@@ -20,8 +20,9 @@ WORKDIR /proxy
 
 COPY --from=builder /usr/local/bin/microsocks /usr/local/bin
 
-RUN apk add --update --no-cache \
-      --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories \
+      && apk add --update --no-cache \
+      --repository  \
       dumb-init \
       openconnect
 
