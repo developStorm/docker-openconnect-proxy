@@ -2,9 +2,9 @@
 # Credit to https://github.com/wazum/openconnect-proxy
 
 if [[ -z "${SOCKS_USER}" ]]; then
-  /usr/local/bin/microsocks -i 0.0.0.0 -p 1080 & 
+  /usr/local/bin/microsocks -i 0.0.0.0 -p 1080 >/dev/null & 
 else
-  /usr/local/bin/microsocks -i 0.0.0.0 -p 1080 -u ${SOCKS_USER} -P ${SOCKS_PASSWORD} & 
+  /usr/local/bin/microsocks -i 0.0.0.0 -p 1080 -u ${SOCKS_USER} -P ${SOCKS_PASSWORD} >/dev/null & 
 fi
 
 # Start openconnect
