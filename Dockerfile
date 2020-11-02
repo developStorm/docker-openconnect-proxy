@@ -1,4 +1,4 @@
-FROM alpine:3.12 as builder
+FROM alpine:3.12 AS builder
 RUN apk add --update --no-cache \
       --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
       bash \
@@ -16,14 +16,15 @@ RUN mkdir /build \
       && rm -R /build
 
 FROM alpine:3.12
-COPY --from builder /usr/local/bin/microsocks /usr/local/bin
+WORKDIR /proxy
+
+COPY --from=builder /usr/local/bin/microsocks /usr/local/bin
 
 RUN apk add --update --no-cache \
       --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
       dumb-init \
       openconnect
 
-ADD ./scripts ./scripts
-RUN chmod 755 ./scripts/*
+ADD entrypoint.sh .
 
-ENTRYPOINT [  "dumb-init", "./scripts/entrypoint.sh" ]
+ENTRYPOINT [  "dumb-init", "/proxy/entrypoint.sh" ]
