@@ -31,6 +31,6 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
       openssl \
       coreutils
 
-ADD entrypoint.sh .
+COPY entrypoint.sh otp ./
 
 ENTRYPOINT [  "dumb-init", "/proxy/entrypoint.sh" ]
