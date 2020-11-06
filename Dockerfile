@@ -25,7 +25,11 @@ RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repos
       && apk add --update --no-cache \
       nettle \
       dumb-init \
-      openconnect
+      openconnect \
+      jq \
+      bash \
+      openssl \
+      coreutils
 
 ADD entrypoint.sh .
 
