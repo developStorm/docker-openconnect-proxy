@@ -14,11 +14,11 @@ if [[ -z "${OPENCONNECT_PASSWORD}" ]]; then
 elif [[ ! -z "${OPENCONNECT_PASSWORD}" ]] && [[ ! -z "${OPENCONNECT_MFA_HOTP}" ]]; then
   HOTP_COUNT=$(echo ${OPENCONNECT_MFA_HOTP} | sha256sum - | wget -q -O- "https://api.countapi.xyz/hit/"$(awk '{ print $1 }') | cut -d ":" -f2 | cut -d "}" -f1)
   HOTP_CODE=$(/proxy/otp -m hotp -s ${OPENCONNECT_MFA_HOTP} -c ${HOTP_COUNT})
-  (echo $OPENCONNECT_PASSWORD; echo $HOTP_CODE) | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL 
+  (echo $OPENCONNECT_PASSWORD; echo $HOTP_CODE) | openconnect -u "$OPENCONNECT_USER" "$OPENCONNECT_OPTIONS" --passwd-on-stdin "$OPENCONNECT_URL"
 elif [[ ! -z "${OPENCONNECT_PASSWORD}" ]] && [[ ! -z "${OPENCONNECT_MFA_CODE}" ]]; then
 # Multi factor authentication (MFA)
-  (echo $OPENCONNECT_PASSWORD; echo $OPENCONNECT_MFA_CODE) | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL
+  (echo $OPENCONNECT_PASSWORD; echo $OPENCONNECT_MFA_CODE) | openconnect -u "$OPENCONNECT_USER" "$OPENCONNECT_OPTIONS" --passwd-on-stdin "$OPENCONNECT_URL"
 elif [[ ! -z "${OPENCONNECT_PASSWORD}" ]]; then
 # Standard authentication
-  echo $OPENCONNECT_PASSWORD | openconnect -u $OPENCONNECT_USER $OPENCONNECT_OPTIONS --passwd-on-stdin $OPENCONNECT_URL
+  echo $OPENCONNECT_PASSWORD | openconnect -u "$OPENCONNECT_USER" "$OPENCONNECT_OPTIONS" --passwd-on-stdin "$OPENCONNECT_URL"
 fi
